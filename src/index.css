@@ -1,0 +1,72 @@
+.container{
+  font-family: Arial, sans-serif;
+  width: 100%;
+  /* text-align: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.to-do {
+  border: 1px solid #ff4d4d;
+}
+
+.to-do-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* This ensures the task text is on the left and buttons are on the right */
+  width: 80%; /* Adjust the width as needed */
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.task-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.strike {
+  text-decoration: line-through;
+  color: gray;
+}
+
+button {
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.delete-button {
+  background-color: #ff4d4d; /* Red for delete */
+  color: white;
+}
+
+.edit-button {
+  background-color: #ffa500; /* Orange for edit */
+  color: white;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  margin: 10px 0;
+  width: 20%;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
