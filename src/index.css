@@ -1,14 +1,23 @@
-.container{
-  font-family: Arial, sans-serif;
-  width: 100%;
-  /* text-align: center; */
+.app-container {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .to-do {
-  border: 1px solid #ff4d4d;
+  font-family: Arial, sans-serif;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  border: 1px solid black;
+  padding: 20px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  margin-left: 0;
 }
 
 .to-do-list {
@@ -16,24 +25,42 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding-left: 0;
+  margin-left: 0;
 }
 
 .list-item {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* This ensures the task text is on the left and buttons are on the right */
-  width: 80%; /* Adjust the width as needed */
+  width: 100%;
   margin: 10px 0;
   padding: 10px;
   background-color: #f9f9f9;
-  border-radius: 5px;
+  border-radius: 10px;
+  box-sizing: border-box;
 }
 
 .task-container {
   display: flex;
   align-items: center;
+  flex: 1;
+  margin-left: 10px;
+}
+
+.text {
+  flex: 1;
+  text-align: left;
+  margin-right: auto;
+}
+
+.text p {
+  margin: 0;
+}
+
+.button-group {
+  display: flex;
   gap: 10px;
-  width: 100%;
+  margin-left: auto;
 }
 
 .strike {
@@ -48,12 +75,12 @@ button {
 }
 
 .delete-button {
-  background-color: #ff4d4d; /* Red for delete */
+  background-color: #ff4d4d;
   color: white;
 }
 
 .edit-button {
-  background-color: #ffa500; /* Orange for edit */
+  background-color: #ffa500;
   color: white;
 }
 
@@ -61,12 +88,19 @@ input[type="text"] {
   padding: 10px;
   font-size: 16px;
   margin: 10px 0;
-  width: 20%;
+  width: 50%;
   text-align: center;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
 
 input[type="checkbox"] {
-  margin-right: 10px;
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }

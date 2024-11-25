@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  //states
+  // states
   const [lists, setList] = useState([
     { task: "wanna create to do app", isStrike: false },
     { task: "nothing", isStrike: true },
@@ -11,7 +11,7 @@ function App() {
   const [input, setValue] = useState("");
   const [check, setCheck] = useState(false);
 
-  //change input value
+  // change input value
   function changeValue(event) {
     setValue(event.target.value);
   }
@@ -42,7 +42,7 @@ function App() {
     );
   }
 
-  // deletiong
+  // deletion
   function deleteList(index) {
     const tasks = lists.filter((_, i) => i !== index);
     setList(tasks);
@@ -52,7 +52,7 @@ function App() {
   function editList() {}
 
   return (
-    <>
+    <div className="app-container">
       <div className="to-do">
         <h2>To Do</h2>
         <input
@@ -63,23 +63,21 @@ function App() {
           onChange={changeValue}
         />
         <button onClick={() => addList()}>Add</button>
-        <div className="container">
-          <div className="to-do-list">
-            <ol>
-              {lists.map((list, index) => (
-                <li key={index} className="list-item">
-                  <input
-                    type="checkbox"
-                    value={check}
-                    checked={list.isStrike}
-                    onChange={(e) => strikeList(e, index)}
-                  />
-                  <div className="task-container">
-                    <span className="text">
-                      <p className={list.isStrike ? "strike" : ""}>
-                        {list.task}
-                      </p>
-                    </span>
+        <div className="to-do-list">
+          <ul>
+            {lists.map((list, index) => (
+              <li key={index} className="list-item">
+                <input
+                  type="checkbox"
+                  value={check}
+                  checked={list.isStrike}
+                  onChange={(e) => strikeList(e, index)}
+                />
+                <div className="task-container">
+                  <span className="text">
+                    <p className={list.isStrike ? "strike" : ""}>{list.task}</p>
+                  </span>
+                  <div className="button-group">
                     <button
                       className="delete-button"
                       onClick={() => deleteList(index)}
@@ -93,13 +91,13 @@ function App() {
                       Edit
                     </button>
                   </div>
-                </li>
-              ))}
-            </ol>
-          </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
