@@ -33,12 +33,16 @@ h1{
 .add{
   border-radius: 0 17.5px 17.5px 0;
   background-color: #9dff00;
-  font-weight: bold;
   height: 2.78em;
   width: 5em;
   border: none;
   border-top: 2.5px solid #9dff00;
   margin-bottom: 20px;
+}
+
+.add:hover{
+  background-color: #6fb500;
+  border-top: 2.5px solid #6fb500;
 }
 
 .to-do-list {
@@ -63,6 +67,11 @@ h1{
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
+  transition: ease .3s;
+}
+
+.list-item:hover{
+  background-color: #2a2a2a;
 }
 
 .done{
@@ -118,6 +127,8 @@ button {
   font-size: 14px;
   cursor: pointer;
   border: none;
+  font-weight: bold;
+  transition: .3s ease;
 }
 
 .delete-button {
@@ -126,10 +137,18 @@ button {
   border-radius: 15px;
 }
 
+.delete-button:hover{
+  background-color: #d43636;
+}
+
 .edit-button {
   background-color: #9dff00;
   border-radius: 15px;
   color: black;
+}
+
+.edit-button:hover{
+  background-color: #6fb500;
 }
 
 #input {
