@@ -84,7 +84,7 @@ function App() {
     let value = document.getElementById("task-change" + index).value.trim();
 
     if (
-      lists.filter((list,i) => list.task.toUpperCase() === value.toUpperCase() )
+      lists.filter((list,i) => list.task.toUpperCase() === value.toUpperCase() && i !== index)
         .length > 0
     ) {
       const errorDiv = document.getElementById("newError");
