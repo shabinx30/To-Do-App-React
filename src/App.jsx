@@ -69,6 +69,8 @@ function App() {
 
   // editing
 
+
+
   function openEdit(index) {
     document.getElementById("task-change" + index).style.display = "block";
     document.getElementById("task-text" + index).style.display = "none";
@@ -114,6 +116,7 @@ function App() {
       document.getElementById("task-change" + index).style.display = "none";
     }
   }
+
 
   return (
     <>
