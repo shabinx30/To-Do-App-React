@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   // states
   const [lists, setList] = useState([
-    { task: "wanna create to do app", isStrike: false },
+    { task: "i wanna create to do app", isStrike: false },
     { task: "nothing", isStrike: true },
   ]);
 
@@ -18,16 +18,39 @@ function App() {
 
   // add to list
   function addList(e) {
-    if (input.trim() !== "") {
-      if (!e) {
-        setList((l) => [...l, { task: input, isStrike: false }]);
-        setValue("");
-      } else if (e.key === "Enter") {
-        setList((l) => [...l, { task: input, isStrike: false }]);
-        setValue("");
-      }
+    e.preventDefault();
+    let test = input.trim();
+  
+    // Check for duplicates
+    if (
+      lists.filter((list) => list.task.toUpperCase() === test.toUpperCase())
+        .length > 0
+    ) {
+      // Show error div
+      const errorDiv = document.getElementById("newError");
+      errorDiv.style.display = "flex";
+      errorDiv.style.animation = "errorS 0.5s ease forwards";
+  
+      // Hide error div after 3 seconds
+      setTimeout(() => {
+        errorDiv.style.animation = "errorF 0.5s ease forwards";
+      }, 2500);
+  
+      setTimeout(() => {
+        errorDiv.style.opacity = "0";
+      }, 3000);
+  
+      setValue(""); // Clear the input
+      return;
+    }
+  
+    // Add task if not a duplicate
+    if (test !== "") {
+      setList((l) => [...l, { task: test, isStrike: false }]);
+      setValue("");
     }
   }
+  
 
   // adding the strike
   function strikeList(event, index) {
@@ -49,24 +72,38 @@ function App() {
   }
 
   // editing
-  function editList() {}
+  function editList(index) {}
 
   return (
-    <div className="app-container">
+    <>
+      <div className="error" id="newError">
+        <div>
+          <i className="fa-solid fa-xmark"></i>
+        </div>
+        <p>
+          This task is already existing!!!
+        </p>
+      </div>
+      <div className="app-container">
       <div className="to-do">
-        <h2>To Do</h2>
-        <input
-          type="text"
-          id="input"
-          value={input}
-          onKeyDown={addList}
-          onChange={changeValue}
-        />
-        <button onClick={() => addList()}>Add</button>
+        <h1>To Do List</h1>
+        <form action="#" onSubmit={(e)=> addList(e)}>
+          <input
+            type="text"
+            id="input"
+            value={input}
+            autoComplete="off"
+            onChange={changeValue}
+            placeholder="New Task..."
+          />
+          <button type="submit" className="add">
+            Add
+          </button>
+        </form>
         <div className="to-do-list">
           <ul>
             {lists.map((list, index) => (
-              <li key={index} className="list-item">
+              <li key={index} className={list.isStrike ? "done" : "list-item"}>
                 <input
                   type="checkbox"
                   value={check}
@@ -74,9 +111,10 @@ function App() {
                   onChange={(e) => strikeList(e, index)}
                 />
                 <div className="task-container">
-                  <span className="text">
+                  <div className="text">
+                    {/* <input type="text" value={list.tast} /> */}
                     <p className={list.isStrike ? "strike" : ""}>{list.task}</p>
-                  </span>
+                  </div>
                   <div className="button-group">
                     <button
                       className="delete-button"
@@ -98,6 +136,7 @@ function App() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

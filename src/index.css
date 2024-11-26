@@ -1,11 +1,19 @@
+body{
+  background-color: black;
+}
+
 .app-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
+}
+
+h1{
+  color: white;
 }
 
 .to-do {
@@ -13,11 +21,23 @@
   width: 100%;
   max-width: 500px;
   text-align: center;
-  border: 1px solid black;
+  border: 1px solid #414141;
   padding: 20px;
   border-radius: 20px;
   box-sizing: border-box;
   margin-left: 0;
+  background-color: #161616;
+}
+
+.add{
+  border-radius: 0 17.5px 17.5px 0;
+  background-color: #9dff00;
+  font-weight: bold;
+  height: 2.78em;
+  width: 5em;
+  border: none;
+  border-top: 2.5px solid #9dff00;
+  margin-bottom: 20px;
 }
 
 .to-do-list {
@@ -35,9 +55,23 @@
   width: 100%;
   margin: 10px 0;
   padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
+  background-color: #414141;
+  border-radius: 20px;
   box-sizing: border-box;
+  cursor: pointer;
+}
+
+.done{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #414141;
+  border-radius: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  filter: brightness(50%);
 }
 
 .task-container {
@@ -51,6 +85,8 @@
   flex: 1;
   text-align: left;
   margin-right: auto;
+  color: white;
+  box-sizing: border-box;
 }
 
 .text p {
@@ -69,38 +105,112 @@
 }
 
 button {
-  padding: 5px 10px;
+  padding: 7.5px 10px;
   font-size: 14px;
   cursor: pointer;
+  border: none;
 }
 
 .delete-button {
-  background-color: #ff4d4d;
-  color: white;
+  background-color: #ff7676;
+  color: black;
+  border-radius: 15px;
 }
 
 .edit-button {
-  background-color: #ffa500;
-  color: white;
+  background-color: #9dff00;
+  border-radius: 15px;
+  color: black;
 }
 
-input[type="text"] {
+#input {
   padding: 10px;
   font-size: 16px;
   margin: 10px 0;
   width: 50%;
   text-align: center;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  border-radius: 17.5px 0 0 17.5px;
+  border: none;
+}
+
+#input:focus {
+  border: none;
+  outline: none;
 }
 
 input[type="checkbox"] {
   margin: 0;
+  cursor: pointer;
 }
 
 ul {
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  /* margin: 0; */
+  margin-top: 0;
+  margin-bottom: 0;
   width: 100%;
+  margin-left: 3em;
+  margin-right: 3em;
+}
+
+.error {
+  display: none;
+  z-index: 1001;
+  width: 25%;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #7676768a;
+  position: absolute;
+  top: 10%;
+  left: 39.5%;
+  min-width: fit-content;
+  max-width: fit-content;
+}
+
+.error p {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 1em;
+  color: white;
+  margin-bottom: auto;
+  margin-top: auto;
+  margin-right: 2em;
+}
+
+.error div {
+  border-radius: 50%;
+  background-color: #ff5454;
+  height: 70%;
+  width: 24px;
+  padding-left: 5px;
+  margin-left: 1em;
+  margin-top: .35em;
+}
+
+@keyframes errorS {
+  0% {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(100%)
+  }
+}
+
+@keyframes errorF {
+  0% {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+}
+
+.fa-solid{
+  color: white;
+  margin-top: .33em;
+  margin-left: .23em;
 }
