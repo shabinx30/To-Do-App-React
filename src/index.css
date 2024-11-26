@@ -59,6 +59,9 @@ h1{
   border-radius: 20px;
   box-sizing: border-box;
   cursor: pointer;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 .done{
@@ -91,6 +94,11 @@ h1{
 
 .text p {
   margin: 0;
+  color: white;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
 }
 
 .button-group {
