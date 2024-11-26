@@ -3,10 +3,7 @@ import "./App.css";
 
 function App() {
   // states
-  const [lists, setList] = useState([
-    { task: "i wanna create to do app", isStrike: false },
-    { task: "nothing", isStrike: true },
-  ]);
+  const [lists, setList] = useState([]);
 
   const [input, setValue] = useState("");
   const [check, setCheck] = useState(false);
@@ -143,7 +140,7 @@ function App() {
             </button>
           </form>
           <div className="to-do-list">
-            <ul>
+            {lists.length > 0 ? <ul>
               {lists.map((list, index) => (
                 <li
                   key={index}
@@ -188,7 +185,7 @@ function App() {
                   </div>
                 </li>
               ))}
-            </ul>
+            </ul> : <p className="no-task">No task added yet.</p>}
           </div>
         </div>
       </div>

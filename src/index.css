@@ -1,12 +1,13 @@
 body{
   background-color: black;
+  padding-top: 5px;
 }
 
 .app-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
+  min-height: 90vh;
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
@@ -227,4 +228,8 @@ ul {
   outline: none;
   border-radius: 10px;
   height: 2em;
+}
+
+.no-task{
+  color: #bfbfbf;
 }
