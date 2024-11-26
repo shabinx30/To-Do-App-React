@@ -20,7 +20,7 @@ function App() {
   function addList(e) {
     e.preventDefault();
     let test = input.trim();
-  
+
     // Check for duplicates
     if (
       lists.filter((list) => list.task.toUpperCase() === test.toUpperCase())
@@ -30,27 +30,26 @@ function App() {
       const errorDiv = document.getElementById("newError");
       errorDiv.style.display = "flex";
       errorDiv.style.animation = "errorS 0.5s ease forwards";
-  
+
       // Hide error div after 3 seconds
       setTimeout(() => {
         errorDiv.style.animation = "errorF 0.5s ease forwards";
-      }, 2500);
-  
+      }, 3000);
+
       setTimeout(() => {
         errorDiv.style.opacity = "0";
       }, 3000);
-  
+
       setValue(""); // Clear the input
       return;
     }
-  
+
     // Add task if not a duplicate
     if (test !== "") {
       setList((l) => [...l, { task: test, isStrike: false }]);
       setValue("");
     }
   }
-  
 
   // adding the strike
   function strikeList(event, index) {
@@ -72,7 +71,52 @@ function App() {
   }
 
   // editing
-  function editList(index) {}
+
+  function openEdit(index) {
+    document.getElementById("task-change" + index).style.display = "block";
+    document.getElementById("task-text" + index).style.display = "none";
+    document.getElementById("task-change" + index).value =
+      document.getElementById("task-text" + index).textContent;
+  }
+
+  function editList(e, index) {
+    e.preventDefault()
+    let value = document.getElementById("task-change" + index).value.trim();
+
+    if (
+      lists.filter((list,i) => list.task.toUpperCase() === value.toUpperCase() )
+        .length > 0
+    ) {
+      const errorDiv = document.getElementById("newError");
+      errorDiv.style.display = "flex";
+      errorDiv.style.animation = "errorS 0.5s ease forwards";
+
+      // Hide error div after 3 seconds
+      setTimeout(() => {
+        errorDiv.style.animation = "errorF 0.5s ease forwards";
+      }, 3000);
+
+      setTimeout(() => {
+        errorDiv.style.opacity = "0";
+      }, 3000);
+
+      return;
+    }
+
+    if (value !== "") {
+      e.preventDefault();
+      document.getElementById("task-text" + index).style.display = "block";
+      const updatedLists = lists.map((item, i) => {
+        if (i === index) {
+          return { ...item, task: value };
+        }
+        return item;
+      });
+
+      setList(updatedLists);
+      document.getElementById("task-change" + index).style.display = "none";
+    }
+  }
 
   return (
     <>
@@ -80,62 +124,74 @@ function App() {
         <div>
           <i className="fa-solid fa-xmark"></i>
         </div>
-        <p>
-          This task is already existing!!!
-        </p>
+        <p>This task is already existing!!!</p>
       </div>
       <div className="app-container">
-      <div className="to-do">
-        <h1>To Do List</h1>
-        <form action="#" onSubmit={(e)=> addList(e)}>
-          <input
-            type="text"
-            id="input"
-            value={input}
-            autoComplete="off"
-            onChange={changeValue}
-            placeholder="New Task..."
-          />
-          <button type="submit" className="add">
-            Add
-          </button>
-        </form>
-        <div className="to-do-list">
-          <ul>
-            {lists.map((list, index) => (
-              <li key={index} className={list.isStrike ? "done" : "list-item"}>
-                <input
-                  type="checkbox"
-                  value={check}
-                  checked={list.isStrike}
-                  onChange={(e) => strikeList(e, index)}
-                />
-                <div className="task-container">
-                  <div className="text">
-                    {/* <input type="text" value={list.tast} /> */}
-                    <p className={list.isStrike ? "strike" : ""}>{list.task}</p>
+        <div className="to-do">
+          <h1>To Do List</h1>
+          <form action="#" onSubmit={(e) => addList(e)}>
+            <input
+              type="text"
+              id="input"
+              value={input}
+              autoComplete="off"
+              onChange={changeValue}
+              placeholder="New Task..."
+            />
+            <button type="submit" className="add">
+              Add
+            </button>
+          </form>
+          <div className="to-do-list">
+            <ul>
+              {lists.map((list, index) => (
+                <li
+                  key={index}
+                  className={list.isStrike ? "done" : "list-item"}
+                >
+                  <input
+                    type="checkbox"
+                    value={check}
+                    checked={list.isStrike}
+                    onChange={(e) => strikeList(e, index)}
+                  />
+                  <div className="task-container">
+                    <div className="text">
+                      <form onSubmit={(e) => editList(e, index)}>
+                        <input
+                          type="text"
+                          id={"task-change" + index}
+                          style={{ display: "none" }}
+                        />
+                      </form>
+                      <p
+                        id={"task-text" + index}
+                        className={list.isStrike ? "strike" : ""}
+                      >
+                        {list.task}
+                      </p>
+                    </div>
+                    <div className="button-group">
+                      <button
+                        className="delete-button"
+                        onClick={() => deleteList(index)}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        className="edit-button"
+                        onClick={() => openEdit(index)}
+                      >
+                        Edit
+                      </button>
+                    </div>
                   </div>
-                  <div className="button-group">
-                    <button
-                      className="delete-button"
-                      onClick={() => deleteList(index)}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="edit-button"
-                      onClick={() => editList(index)}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }
