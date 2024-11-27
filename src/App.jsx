@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import "./App.css";
 
 function App() {
   // states
-  const [lists, setList] = useState([]);
+  const [lists, setList] = useState(() => {
+    // Load saved tasks from localStorage or start with an empty array
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
 
   const [input, setValue] = useState("");
   const [check, setCheck] = useState(false);
+
+  // Save tasks to localStorage whenever the `lists` state changes
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(lists));
+  }, [lists]);
 
   // change input value
   function changeValue(event) {
