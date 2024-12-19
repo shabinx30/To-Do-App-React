@@ -1,10 +1,9 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../App.css";
 
 function ToDo() {
   // states
   const [lists, setList] = useState(() => {
-    
     const savedTasks = localStorage.getItem("tasks");
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
@@ -12,9 +11,11 @@ function ToDo() {
   const [input, setValue] = useState("");
   const [check, setCheck] = useState(false);
 
-  
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(lists));
+    // console.log()
+
+    // return () =>
   }, [lists]);
 
   // change input value
@@ -26,6 +27,8 @@ function ToDo() {
   function addList(e) {
     e.preventDefault();
     let test = input.trim();
+
+    // new Function(`return ${test}`)()
 
     // Check for duplicates
     if (
@@ -50,7 +53,6 @@ function ToDo() {
       return;
     }
 
-    
     if (test !== "") {
       setList((l) => [...l, { task: test, isStrike: false }]);
       setValue("");
@@ -77,9 +79,6 @@ function ToDo() {
   }
 
   // editing
-
-
-
   function openEdit(index) {
     document.getElementById("task-change" + index).style.display = "block";
     document.getElementById("task-text" + index).style.display = "none";
@@ -88,18 +87,19 @@ function ToDo() {
   }
 
   function editList(e, index) {
-    e.preventDefault()
+    e.preventDefault();
     let value = document.getElementById("task-change" + index).value.trim();
 
     if (
-      lists.filter((list,i) => list.task.toUpperCase() === value.toUpperCase() && i !== index)
-        .length > 0
+      lists.filter(
+        (list, i) =>
+          list.task.toUpperCase() === value.toUpperCase() && i !== index
+      ).length > 0
     ) {
       const errorDiv = document.getElementById("newError");
       errorDiv.style.display = "flex";
       errorDiv.style.animation = "errorS 0.5s ease forwards";
 
-      // Hide error div after 3 seconds
       setTimeout(() => {
         errorDiv.style.animation = "errorF 0.5s ease forwards";
       }, 3000);
@@ -126,7 +126,6 @@ function ToDo() {
     }
   }
 
-
   return (
     <>
       <div className="error" id="newError">
@@ -152,52 +151,68 @@ function ToDo() {
             </button>
           </form>
           <div className="to-do-list">
-            {lists.length > 0 ? <ul>
-              {lists.map((list, index) => (
-                <li
-                  key={index}
-                  className={list.isStrike ? "done" : "list-item"}
-                >
-                  <input
-                    type="checkbox"
-                    value={check}
-                    checked={list.isStrike}
-                    onChange={(e) => strikeList(e, index)}
-                  />
-                  <div className="task-container">
-                    <div className="text">
-                      <form onSubmit={(e) => editList(e, index)}>
-                        <input
-                          type="text"
-                          id={"task-change" + index}
-                          style={{ display: "none" }}
-                        />
-                      </form>
-                      <p
-                        id={"task-text" + index}
-                        className={list.isStrike ? "strike" : ""}
-                      >
-                        {list.task}
-                      </p>
+            {lists.length > 0 ? (
+              <ul>
+                {lists.map((list, index) => (
+                  <li
+                    key={index}
+                    className={
+                      list.isStrike
+                        ? index === 0
+                          ? "donef"
+                          : index === lists.length - 1
+                          ? "donel"
+                          : "done"
+                        : index === 0
+                        ? "listf"
+                        : index === lists.length - 1
+                        ? "listl"
+                        : "list-item"
+                    }
+                  >
+                    <input
+                      type="checkbox"
+                      value={check}
+                      checked={list.isStrike}
+                      onChange={(e) => strikeList(e, index)}
+                    />
+                    <div className="task-container">
+                      <div className="text">
+                        <form onSubmit={(e) => editList(e, index)}>
+                          <input
+                            type="text"
+                            id={"task-change" + index}
+                            style={{ display: "none" }}
+                          />
+                        </form>
+                        <p
+                          id={"task-text" + index}
+                          className={list.isStrike ? "strike" : ""}
+                        >
+                          {list.task}
+                        </p>
+                      </div>
+                      <div className="button-group">
+                        <button
+                          className="delete-button"
+                          onClick={() => deleteList(index)}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          className="edit-button"
+                          onClick={() => openEdit(index)}
+                        >
+                          Edit
+                        </button>
+                      </div>
                     </div>
-                    <div className="button-group">
-                      <button
-                        className="delete-button"
-                        onClick={() => deleteList(index)}
-                      >
-                        Delete
-                      </button>
-                      <button
-                        className="edit-button"
-                        onClick={() => openEdit(index)}
-                      >
-                        Edit
-                      </button>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul> : <p className="no-task">No task added yet.</p>}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="no-task">No task added yet.</p>
+            )}
           </div>
         </div>
       </div>

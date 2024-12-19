@@ -61,7 +61,7 @@ h1{
   margin: 10px 0;
   padding: 10px;
   background-color: #414141;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   box-sizing: border-box;
   cursor: pointer;
   word-wrap: break-word;
@@ -70,7 +70,40 @@ h1{
   transition: ease .3s;
 }
 
-.list-item:hover{
+.listf {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #414141;
+  border-radius: 20px 20px 0 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  transition: ease .3s;
+}
+
+.listl {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #414141;
+  border-radius: 0 0 20px 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  transition: ease .3s;
+}
+
+.list-item:hover, .listf:hover, .listl:hover{
+  border-radius: 20px;
   background-color: #2a2a2a;
 }
 
@@ -81,7 +114,33 @@ h1{
   margin: 10px 0;
   padding: 10px;
   background-color: #414141;
-  border-radius: 20px;
+  /* border-radius: 20px; */
+  box-sizing: border-box;
+  cursor: pointer;
+  filter: brightness(50%);
+}
+
+.donef{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #414141;
+  border-radius: 20px 20px 0 0 ;
+  box-sizing: border-box;
+  cursor: pointer;
+  filter: brightness(50%);
+}
+
+.donel{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #414141;
+  border-radius: 0 0 20px 20px;
   box-sizing: border-box;
   cursor: pointer;
   filter: brightness(50%);
