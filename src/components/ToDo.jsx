@@ -11,7 +11,7 @@ function ToDo() {
     });
 
     const [input, setValue] = useState("");
-    const [check, setCheck] = useState(false);
+    const [changes, setChanges] = useState('');
 
 
     const newError = useRef(null)
@@ -31,39 +31,29 @@ function ToDo() {
         let test = input.trim();
 
         if (lists.filter((list) => list.task.toUpperCase() === test.toUpperCase()).length > 0) {
+
             // Show error div
-
-            newError.current.style.display = "flex";
-            newError.current.style.animation = "errorS 0.5s ease forwards";
-
-            // Hide error div
-            setTimeout(() => {
-                newError.current.style.animation = "errorF 0.5s ease forwards";
-            }, 3000);
-
-            setTimeout(() => {
-                newError.current.style.opacity = "0";
-            }, 3000);
+            ShowError()
 
             setValue("");
             return;
         }
 
         if (test !== "") {
-            setList((l) => [...l, { task: test, isStrike: false }]);
+            setList((l) => [...l, { task: test, isStrike: false, isEdit: false }]);
             setValue("");
         }
     }
 
     // adding the strike
-    function strikeList(event, index) {
-        let isChecked = event.target.checked;
-
-        setCheck(isChecked);
-
-        setList((l) =>
-            l.map((list, i) => i === index ? { ...list, isStrike: isChecked } : list)
-        );
+    function strikeList(index) {
+        let res = lists.map((list, i) => {
+            if (i == index) {
+                return { ...list, isStrike: !list.isStrike }
+            }
+            return list
+        })
+        setList(res)
     }
 
     // deletion
@@ -73,51 +63,59 @@ function ToDo() {
     }
 
     // editing
-    function openEdit(index) {
-        document.getElementById("task-change" + index).style.display = "block";
-        document.getElementById("task-text" + index).style.display = "none";
-        document.getElementById("task-change" + index).value = document.getElementById("task-text" + index).textContent;
+    function openEdit(index, task) {
+        let res = lists.map((list, i) => {
+            // close the curresponding input box
+            if (i == index) {
+                // add the task if it provided
+                if(task) {
+                    return { ...list, task: task, isEdit: !list.isEdit }
+                }
+                return { ...list, isEdit: !list.isEdit }
+            }
+            // close if any another input box is open
+            return { ...list, isEdit: false }
+        })
+        setList(res)
     }
 
     function editList(e, index) {
         e.preventDefault();
-        let value = document.getElementById("task-change" + index).value.trim();
+        let value = changes.trim()
+        setChanges('')
 
         if (lists.filter((list, i) => list.task.toUpperCase() === value.toUpperCase() && i !== index).length > 0) {
 
-            newError.current.style.display = "flex";
-            newError.current.style.animation = "errorS 0.5s ease forwards";
-
-            setTimeout(() => {
-                newError.current.style.animation = "errorF 0.5s ease forwards";
-            }, 3000);
-
-            setTimeout(() => {
-                newError.current.style.opacity = "0";
-            }, 3000);
-
+            //show error
+            ShowError()
             return;
         }
 
         if (value !== "") {
-            e.preventDefault();
-            document.getElementById("task-text" + index).style.display = "block";
-            const updatedLists = lists.map((item, i) => {
-                if (i === index) {
-                    return { ...item, task: value };
-                }
-                return item;
-            });
-
-            setList(updatedLists);
-            document.getElementById("task-change" + index).style.display = "none";
+            openEdit(index, value)
         }
+    }
+
+    const ShowError = () => {
+        newError.current.style.display = "flex";
+        newError.current.style.animation = "errorS 0.5s ease forwards";
+
+        setTimeout(() => {
+            newError.current.style.animation = "errorF 0.5s ease forwards";
+            newError.current.style.opacity = "0";
+        }, 3000);
     }
 
     return (
         <>
             <Error newError={newError} />
-            <div className="app-container">
+            <div className="app-container" onClick={() => {
+                    if(changes) {
+                        openEdit(-1)
+                        setChanges('')
+                    }
+                }}
+            >
                 <div className="to-do">
                     <h1>To Do List</h1>
                     <form action="#" onSubmit={(e) => addList(e)}>
@@ -137,7 +135,7 @@ function ToDo() {
                         {lists.length > 0 ? (
                             <ul>
                                 {lists.map((_, index) => (
-                                    <List key={index} index={index} check={check} lists={lists} strikeList={strikeList} editList={editList} deleteList={deleteList} openEdit={openEdit} />
+                                    <List key={index} index={index} changes={changes} setChanges={setChanges} lists={lists} strikeList={strikeList} editList={editList} deleteList={deleteList} openEdit={openEdit} />
                                 ))}
                             </ul>
                         ) : (

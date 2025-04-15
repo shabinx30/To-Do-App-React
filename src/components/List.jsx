@@ -1,29 +1,38 @@
 import React from 'react'
 
-const List = ({ lists, check, index, strikeList, editList, deleteList, openEdit }) => {
+const List = ({ lists, changes, setChanges, index, strikeList, editList, deleteList, openEdit }) => {
     return (
-        <li
-            className={
-                lists[index].isStrike ? 'done' : "list-item"
-            }
+        <li 
+            onClick={(e) => {
+                e.stopPropagation()
+                if(changes) {
+                    openEdit(-1)
+                    setChanges('')
+                }else{
+                    strikeList(index)
+                }
+            }}
+            className={lists[index].isStrike ? 'done' : "list-item"}
         >
             <input
                 type="checkbox"
-                value={check}
                 checked={lists[index].isStrike}
-                onChange={(e) => strikeList(e, index)}
+                onChange={() => strikeList(index)}
             />
             <div className="task-container">
                 <div className="text">
                     <form onSubmit={(e) => editList(e, index)}>
                         <input
                             type="text"
+                            value={changes}
                             id={"task-change" + index}
-                            style={{ display: "none" }}
+                            onClick={(e) => e.stopPropagation()}
+                            onChange={(e) => setChanges(e.target.value)}
+                            style={{ display: lists[index].isEdit ? 'block' : 'none' }}
                         />
                     </form>
                     <p
-                        id={"task-text" + index}
+                        style={{display: lists[index].isEdit ? 'none' : 'block'}}
                         className={lists[index].isStrike ? "strike" : ""}
                     >
                         {lists[index].task}
@@ -32,13 +41,20 @@ const List = ({ lists, check, index, strikeList, editList, deleteList, openEdit 
                 <div className="button-group">
                     <button
                         className="delete-button"
-                        onClick={() => deleteList(index)}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            deleteList(index)
+                        }}
                     >
                         Delete
                     </button>
                     <button
                         className="edit-button"
-                        onClick={() => openEdit(index)}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            openEdit(index)
+                            setChanges(lists[index].task)
+                        }}
                     >
                         Edit
                     </button>
