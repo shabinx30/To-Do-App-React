@@ -82,15 +82,15 @@ function ToDo() {
     function editList(e, index) {
         e.preventDefault();
         let value = changes.trim()
-        setChanges('')
-
+        
         if (lists.filter((list, i) => list.task.toUpperCase() === value.toUpperCase() && i !== index).length > 0) {
-
+            
             //show error
             ShowError()
             return;
         }
-
+        
+        setChanges('')
         if (value !== "") {
             openEdit(index, value)
         }
