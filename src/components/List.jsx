@@ -4,17 +4,7 @@ const List = ({ lists, check, index, strikeList, editList, deleteList, openEdit 
     return (
         <li
             className={
-                lists[index].isStrike
-                    ? index === 0
-                        ? "donef"
-                        : index === lists.length - 1
-                            ? "donel"
-                            : "done"
-                    : index === 0
-                        ? "listf"
-                        : index === lists.length - 1
-                            ? "listl"
-                            : "list-item"
+                lists[index].isStrike ? 'done' : "list-item"
             }
         >
             <input
