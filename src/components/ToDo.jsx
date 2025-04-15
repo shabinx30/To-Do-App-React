@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import List from "./List";
+import Error from "./Error";
 import "../App.css";
 
 function ToDo() {
@@ -10,6 +12,9 @@ function ToDo() {
 
   const [input, setValue] = useState("");
   const [check, setCheck] = useState(false);
+
+
+  const newError = useRef(null)
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(lists));
@@ -36,17 +41,17 @@ function ToDo() {
         .length > 0
     ) {
       // Show error div
-      const errorDiv = document.getElementById("newError");
-      errorDiv.style.display = "flex";
-      errorDiv.style.animation = "errorS 0.5s ease forwards";
+      
+      newError.current.style.display = "flex";
+      newError.current.style.animation = "errorS 0.5s ease forwards";
 
       // Hide error div
       setTimeout(() => {
-        errorDiv.style.animation = "errorF 0.5s ease forwards";
+        newError.current.style.animation = "errorF 0.5s ease forwards";
       }, 3000);
 
       setTimeout(() => {
-        errorDiv.style.opacity = "0";
+        newError.current.style.opacity = "0";
       }, 3000);
 
       setValue("");
@@ -96,16 +101,16 @@ function ToDo() {
           list.task.toUpperCase() === value.toUpperCase() && i !== index
       ).length > 0
     ) {
-      const errorDiv = document.getElementById("newError");
-      errorDiv.style.display = "flex";
-      errorDiv.style.animation = "errorS 0.5s ease forwards";
+      
+      newError.current.style.display = "flex";
+      newError.current.style.animation = "errorS 0.5s ease forwards";
 
       setTimeout(() => {
-        errorDiv.style.animation = "errorF 0.5s ease forwards";
+        newError.current.style.animation = "errorF 0.5s ease forwards";
       }, 3000);
 
       setTimeout(() => {
-        errorDiv.style.opacity = "0";
+        newError.current.style.opacity = "0";
       }, 3000);
 
       return;
@@ -128,12 +133,7 @@ function ToDo() {
 
   return (
     <>
-      <div className="error" id="newError">
-        <div>
-          <i className="fa-solid fa-xmark"></i>
-        </div>
-        <p>This task is already existing!!!</p>
-      </div>
+      <Error newError={newError}/>
       <div className="app-container">
         <div className="to-do">
           <h1>To Do List</h1>
@@ -153,61 +153,8 @@ function ToDo() {
           <div className="to-do-list">
             {lists.length > 0 ? (
               <ul>
-                {lists.map((list, index) => (
-                  <li
-                    key={index}
-                    className={
-                      list.isStrike
-                        ? index === 0
-                          ? "donef"
-                          : index === lists.length - 1
-                          ? "donel"
-                          : "done"
-                        : index === 0
-                        ? "listf"
-                        : index === lists.length - 1
-                        ? "listl"
-                        : "list-item"
-                    }
-                  >
-                    <input
-                      type="checkbox"
-                      value={check}
-                      checked={list.isStrike}
-                      onChange={(e) => strikeList(e, index)}
-                    />
-                    <div className="task-container">
-                      <div className="text">
-                        <form onSubmit={(e) => editList(e, index)}>
-                          <input
-                            type="text"
-                            id={"task-change" + index}
-                            style={{ display: "none" }}
-                          />
-                        </form>
-                        <p
-                          id={"task-text" + index}
-                          className={list.isStrike ? "strike" : ""}
-                        >
-                          {list.task}
-                        </p>
-                      </div>
-                      <div className="button-group">
-                        <button
-                          className="delete-button"
-                          onClick={() => deleteList(index)}
-                        >
-                          Delete
-                        </button>
-                        <button
-                          className="edit-button"
-                          onClick={() => openEdit(index)}
-                        >
-                          Edit
-                        </button>
-                      </div>
-                    </div>
-                  </li>
+                {lists.map((_, index) => (
+                  <List key={index} index={index} check={check} lists={lists} strikeList={strikeList} editList={editList} deleteList={deleteList} openEdit={openEdit} />
                 ))}
               </ul>
             ) : (
