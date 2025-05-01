@@ -15,6 +15,7 @@ body{
 
 h1{
   color: white;
+  margin-block-end: 0.1em;
 }
 
 .to-do {
@@ -45,7 +46,7 @@ h1{
   width: 5em;
   border: none;
   border-top: 2.5px solid #9dff00;
-  margin-bottom: 20px;
+  margin-bottom: 3em;
 }
 
 .add:hover{
