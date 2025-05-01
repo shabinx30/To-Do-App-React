@@ -12,7 +12,7 @@ function ToDo() {
 
     const [input, setValue] = useState("");
     const [changes, setChanges] = useState('');
-    const [alert, setAlert] = useState('')
+    const [alert, setAlert] = useState({message: '', type: ''})
 
 
     const newError = useRef(null)
@@ -34,7 +34,7 @@ function ToDo() {
         if (lists.filter((list) => list.task.toUpperCase() === test.toUpperCase()).length > 0) {
 
             // Show error div
-            ShowError()
+            ShowError('This task is already existing', 'error')
 
             setValue("");
             return;
@@ -61,6 +61,7 @@ function ToDo() {
     function deleteList(index) {
         const tasks = lists.filter((_, i) => i !== index);
         setList(tasks);
+        ShowError('Sucessfully Deleted', 'warning')
     }
 
     // editing
@@ -87,17 +88,18 @@ function ToDo() {
         if (lists.filter((list, i) => list.task.toUpperCase() === value.toUpperCase() && i !== index).length > 0) {
             
             //show error
-            ShowError()
-            return;
+            return ShowError('This task is already existing', 'error')
         }
         
         setChanges('')
         if (value !== "") {
             openEdit(index, value)
         }
+        ShowError('Sucessfully Edited', 'warn')
     }
 
-    const ShowError = () => {
+    const ShowError = (message, type) => {
+        setAlert({message: message, type: type})
         newError.current.style.display = "flex";
         newError.current.style.animation = "errorS 0.5s ease forwards";
 
@@ -109,7 +111,7 @@ function ToDo() {
 
     return (
         <>
-            <Error newError={newError} />
+            <Error newError={newError} alert={alert} />
             <div className="app-container" onClick={() => {
                     if(changes) {
                         openEdit(-1)
@@ -144,7 +146,7 @@ function ToDo() {
                         )}
                     </div>
                     <div style={{display: "flex", justifyContent: "center", paddingTop: '1em'}}>
-                        <p style={{color: "gray", fontSize: "11px", width: "80%"}}><i style={{ marginInline: '0.5em', color: "yellow"}} class="fa-solid fa-triangle-exclamation"></i>Writing down tasks sets the intention, but it's the follow-through that brings real change and growth to your life.</p>
+                        <p style={{color: "gray", fontSize: "11px", width: "80%"}}><i style={{ marginInline: '0.5em', color: "yellow"}} className="fa-solid fa-triangle-exclamation"></i>Writing down tasks sets the intention, but it's the follow-through that brings real change and growth to your life.</p>
                     </div>
                 </div>
             </div>
