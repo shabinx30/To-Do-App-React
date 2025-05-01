@@ -12,6 +12,7 @@ function ToDo() {
 
     const [input, setValue] = useState("");
     const [changes, setChanges] = useState('');
+    const [alert, setAlert] = useState('')
 
 
     const newError = useRef(null)
@@ -141,6 +142,9 @@ function ToDo() {
                         ) : (
                             <p className="no-task">No task added yet.</p>
                         )}
+                    </div>
+                    <div style={{display: "flex", justifyContent: "center", paddingTop: '1em'}}>
+                        <p style={{color: "gray", fontSize: "11px", width: "80%"}}><i style={{ marginInline: '0.5em', color: "yellow"}} class="fa-solid fa-triangle-exclamation"></i>Writing down tasks sets the intention, but it's the follow-through that brings real change and growth to your life.</p>
                     </div>
                 </div>
             </div>
