@@ -25,9 +25,9 @@ const List = ({ lists, changes, setChanges, index, strikeList, editList, deleteL
                         <input
                             type="text"
                             value={changes}
-                            id={"task-change" + index}
                             onClick={(e) => e.stopPropagation()}
                             onChange={(e) => setChanges(e.target.value)}
+                            className='edit-input'
                             style={{ display: lists[index].isEdit ? 'block' : 'none' }}
                         />
                     </form>
@@ -52,11 +52,15 @@ const List = ({ lists, changes, setChanges, index, strikeList, editList, deleteL
                         className="edit-button"
                         onClick={(e) => {
                             e.stopPropagation()
-                            openEdit(index)
+                            if(lists[index].isEdit) {
+                                editList(e, index)
+                            }else{
+                                openEdit(index)
+                            }
                             setChanges(lists[index].task)
                         }}
                     >
-                        Edit
+                        {lists[index].isEdit ? 'Save' : 'Edit'}
                     </button>
                 </div>
             </div>
