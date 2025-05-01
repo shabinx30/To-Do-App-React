@@ -77,6 +77,7 @@ h1{
   overflow-wrap: break-word;
   white-space: normal;
   transition: ease .3s;
+  -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -142,6 +143,8 @@ button {
   cursor: pointer;
   border: none;
   font-weight: bold;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
   transition: .3s ease;
 }
 
