@@ -33,7 +33,7 @@ const List = ({ lists, changes, setChanges, index, strikeList, editList, deleteL
                     </form>
                     <p
                         style={{display: lists[index].isEdit ? 'none' : 'block'}}
-                        className={lists[index].isStrike ? "strike" : ""}
+                        className={lists[index].isStrike ? "strike" : "none-strike"}
                     >
                         {lists[index].task}
                     </p>
