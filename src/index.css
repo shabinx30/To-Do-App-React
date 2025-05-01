@@ -313,3 +313,13 @@ ul {
   padding-left: 7px;
   font-size: 14px;
 }
+
+.cancel-button {
+  background-color: #f2ffde;
+  color: black;
+  border-radius: 15px;
+}
+
+.cancel-button:hover {
+  background-color: #a9b19b;
+}

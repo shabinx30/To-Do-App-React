@@ -40,13 +40,17 @@ const List = ({ lists, changes, setChanges, index, strikeList, editList, deleteL
                 </div>
                 <div className="button-group">
                     <button
-                        className="delete-button"
+                        className={lists[index].isEdit ? "cancel-button" : "delete-button"}
                         onClick={(e) => {
                             e.stopPropagation()
+                            if(lists[index].isEdit) {
+                                openEdit(-1)
+                                return setChanges('')
+                            }
                             deleteList(index)
                         }}
                     >
-                        Delete
+                        {lists[index].isEdit ? 'Cancel' : 'Delete'}
                     </button>
                     <button
                         className="edit-button"
