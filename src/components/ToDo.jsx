@@ -127,7 +127,7 @@ function ToDo() {
                         className="to-do"
                     >
                         <h1>To Do List</h1>
-                        <form action="#" onSubmit={(e) => addList(e)}>
+                        <form onSubmit={(e) => addList(e)}>
                             <input
                                 type="text"
                                 id="input"
