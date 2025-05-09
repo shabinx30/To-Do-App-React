@@ -1,14 +1,19 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 
 const List = ({ lists, changes, setChanges, index, strikeList, editList, deleteList, openEdit }) => {
     return (
-        <li 
+        <motion.li
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: .05 }}
             onClick={(e) => {
                 e.stopPropagation()
-                if(changes) {
+                if (changes) {
                     openEdit(-1)
                     setChanges('')
-                }else{
+                } else {
                     strikeList(index)
                 }
             }}
@@ -32,7 +37,7 @@ const List = ({ lists, changes, setChanges, index, strikeList, editList, deleteL
                         />
                     </form>
                     <p
-                        style={{display: lists[index].isEdit ? 'none' : 'block'}}
+                        style={{ display: lists[index].isEdit ? 'none' : 'block' }}
                         className={lists[index].isStrike ? "strike" : "none-strike"}
                     >
                         {lists[index].task}
@@ -43,7 +48,7 @@ const List = ({ lists, changes, setChanges, index, strikeList, editList, deleteL
                         className={lists[index].isEdit ? "cancel-button" : "delete-button"}
                         onClick={(e) => {
                             e.stopPropagation()
-                            if(lists[index].isEdit) {
+                            if (lists[index].isEdit) {
                                 openEdit(-1)
                                 return setChanges('')
                             }
@@ -56,9 +61,9 @@ const List = ({ lists, changes, setChanges, index, strikeList, editList, deleteL
                         className="edit-button"
                         onClick={(e) => {
                             e.stopPropagation()
-                            if(lists[index].isEdit) {
+                            if (lists[index].isEdit) {
                                 editList(e, index)
-                            }else{
+                            } else {
                                 openEdit(index)
                             }
                             setChanges(lists[index].task)
@@ -68,7 +73,7 @@ const List = ({ lists, changes, setChanges, index, strikeList, editList, deleteL
                     </button>
                 </div>
             </div>
-        </li>
+        </motion.li>
     )
 }
 

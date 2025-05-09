@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import List from "./List";
 import Error from "./Error";
 import "../App.css";
+import { motion, AnimatePresence } from "framer-motion";
 
 function ToDo() {
     // states
@@ -12,7 +13,7 @@ function ToDo() {
 
     const [input, setValue] = useState("");
     const [changes, setChanges] = useState('');
-    const [alert, setAlert] = useState({message: '', type: ''})
+    const [alert, setAlert] = useState({ message: '', type: '' })
 
 
     const newError = useRef(null)
@@ -70,7 +71,7 @@ function ToDo() {
             // close the curresponding input box
             if (i == index) {
                 // add the task if it provided
-                if(task) {
+                if (task) {
                     return { ...list, task: task, isEdit: !list.isEdit }
                 }
                 return { ...list, isEdit: !list.isEdit }
@@ -84,13 +85,13 @@ function ToDo() {
     function editList(e, index) {
         e.preventDefault();
         let value = changes.trim()
-        
+
         if (lists.filter((list, i) => list.task.toUpperCase() === value.toUpperCase() && i !== index).length > 0) {
-            
+
             //show error
             return ShowError('This task is already existing', 'error')
         }
-        
+
         setChanges('')
         if (value !== "") {
             openEdit(index, value)
@@ -99,7 +100,7 @@ function ToDo() {
     }
 
     const ShowError = (message, type) => {
-        setAlert({message: message, type: type})
+        setAlert({ message: message, type: type })
         newError.current.style.display = "flex";
         newError.current.style.animation = "errorS 0.5s ease forwards";
 
@@ -113,42 +114,50 @@ function ToDo() {
         <>
             <Error newError={newError} alert={alert} />
             <div className="app-container" onClick={() => {
-                    if(changes) {
-                        openEdit(-1)
-                        setChanges('')
-                    }
-                }}
+                if (changes) {
+                    openEdit(-1)
+                    setChanges('')
+                }
+            }}
             >
-                <div className="to-do">
-                    <h1>To Do List</h1>
-                    <form action="#" onSubmit={(e) => addList(e)}>
-                        <input
-                            type="text"
-                            id="input"
-                            value={input}
-                            autoComplete="off"
-                            onChange={changeValue}
-                            placeholder="New Task..."
-                        />
-                        <button type="submit" className="add">
-                            Add
-                        </button>
-                    </form>
-                    <div className="to-do-list">
-                        {lists.length > 0 ? (
-                            <ul>
-                                {lists.map((_, index) => (
-                                    <List key={index} index={index} changes={changes} setChanges={setChanges} lists={lists} strikeList={strikeList} editList={editList} deleteList={deleteList} openEdit={openEdit} />
-                                ))}
-                            </ul>
-                        ) : (
-                            <p className="no-task">No task added yet.</p>
-                        )}
-                    </div>
-                    <div style={{display: "flex", justifyContent: "center", paddingTop: '1em'}}>
-                        <p style={{color: "gray", fontSize: "11px", width: "80%"}}><i style={{ marginInline: '0.5em', color: "yellow"}} className="fa-solid fa-triangle-exclamation"></i>Writing down tasks sets the intention, but it's the follow-through that brings real change and growth to your life.</p>
-                    </div>
-                </div>
+                <AnimatePresence>
+                    <motion.div 
+                        layout
+                        transition={{ type: "spring", duration: 1 }}
+                        className="to-do"
+                    >
+                        <h1>To Do List</h1>
+                        <form action="#" onSubmit={(e) => addList(e)}>
+                            <input
+                                type="text"
+                                id="input"
+                                value={input}
+                                autoComplete="off"
+                                onChange={changeValue}
+                                placeholder="New Task..."
+                            />
+                            <button type="submit" className="add">
+                                Add
+                            </button>
+                        </form>
+                        <div className="to-do-list">
+                            {lists.length > 0 ? (
+                                <ul>
+                                    <AnimatePresence>
+                                        {lists.map((_, index) => (
+                                            <List key={index} index={index} changes={changes} setChanges={setChanges} lists={lists} strikeList={strikeList} editList={editList} deleteList={deleteList} openEdit={openEdit} />
+                                        ))}
+                                    </AnimatePresence>
+                                </ul>
+                            ) : (
+                                <p className="no-task">No task added yet.</p>
+                            )}
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "center", paddingTop: '1em' }}>
+                            <p style={{ color: "gray", fontSize: "11px", width: "80%" }}><i style={{ marginInline: '0.5em', color: "yellow" }} className="fa-solid fa-triangle-exclamation"></i>Writing down tasks sets the intention, but it's the follow-through that brings real change and growth to your life.</p>
+                        </div>
+                    </motion.div>
+                </AnimatePresence>
             </div>
         </>
     );

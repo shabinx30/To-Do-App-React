@@ -70,7 +70,7 @@ h1{
   width: 100%;
   margin: 10px 0;
   padding: 10px;
-  background-color: #414141;
+  background-color: #2d2d2d;
   border-radius: 20px;
   box-sizing: border-box;
   cursor: pointer;
@@ -83,7 +83,7 @@ h1{
 
 
 .list-item:hover, .listf:hover, .listl:hover{
-  background-color: #2a2a2a;
+  background-color: #242424;
 }
 
 .done{
@@ -116,7 +116,6 @@ h1{
 .text p {
   margin: 0 1em 0em .5em;
   font-size: 14px;
-  /* color: white; */
   word-wrap: break-word;
   overflow-wrap: break-word;
   word-break: break-word;
